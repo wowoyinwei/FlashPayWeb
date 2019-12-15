@@ -1,0 +1,14 @@
+﻿{
+  "port": 83,
+  "simpleDbPath": "./simpleDb",
+  "ethCliUrl": "http://123.176.98.59:8545",
+  "StartBlockNumber": 5605950
+}
+
+
+//////usdf 0x2774c07591067523cc72cee4876620e9d304268c
+
+/////careAddress 0x4b8db98D09e35D85E501321b68195F9f23EfDd87  0x29157A89e9dD1897EF77cFFDB46D681546062bf9
+
+//// careEvent   Transfer(address1,address,uint256)
+
