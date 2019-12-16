@@ -1,6 +1,8 @@
 ﻿using FlashPayWeb.libs;
 using FlashPayWeb.Persistence;
 using FlashPayWeb.Persistence.SimpleDB;
+using Nethereum.Web3;
+using Nethereum.Web3.Accounts;
 
 namespace FlashPayWeb
 {
@@ -17,61 +19,6 @@ namespace FlashPayWeb
             }
         }
 
-        /*
-        private static Cache<UInt160, UInt160> careAddrs;
-        public static Cache<UInt160, UInt160> CareAddrs
-        {
-            get
-            {
-                if (careAddrs == null)
-                {
-                    careAddrs = Store.GetCareAddrs();
-                    Logger.LogCommon("开始缓存需要在意的地址：");
-                    foreach (var a in careAddrs.Find())
-                    {
-                        Logger.LogCommon(a.Key.ToString());
-                    }
-                }
-                return careAddrs;
-            }
-        }
-
-        private static Cache<UInt160, UInt160> careAssets;
-        public static Cache<UInt160, UInt160> CareAssets
-        {
-            get
-            {
-                if (careAssets == null)
-                {
-                    careAssets = Store.GetCareAssets();
-                    Logger.LogCommon("开始缓存需要在意的资产：");
-                    foreach (var a in careAssets.Find())
-                    {
-                        Logger.LogCommon(a.Key.ToString());
-                    }
-                }
-                return careAssets;
-            }
-        }
-
-        private static Cache<UInt256, CareEvent> careEvents;
-        public static Cache<UInt256, CareEvent> CareEvents
-        {
-            get
-            {
-                if (careEvents == null)
-                {
-                    careEvents = Store.GetCareEvents();
-                    Logger.LogCommon("开始缓存需要在意的资产通知：");
-                    foreach (var a in careEvents.Find())
-                    {
-                        Logger.LogCommon(a.Value.ToJson());
-                    }
-                }
-                return careEvents;
-            }
-        }
-        */
         private static EthHelper ethHelper;
         public static EthHelper EthHelper
         {
@@ -80,6 +27,28 @@ namespace FlashPayWeb
                 if (ethHelper == null)
                     ethHelper = new EthHelper(Setting.Ins.EthCliUrl);
                 return ethHelper;
+            }
+        }
+
+        private static CrawlerHelper crawlerHelper;
+        public static CrawlerHelper CrawlerHelper
+        {
+            get
+            {
+                if (crawlerHelper == null)
+                    crawlerHelper = new CrawlerHelper(Setting.Ins.CrawlerUrl);
+                return crawlerHelper;
+            }
+        }
+
+        private static Web3 web3Ins;
+        public static Web3 Web3Ins
+        {
+            get
+            {
+                if (web3Ins == null)
+                    web3Ins = new Web3(new Account(Setting.Ins.OwnerPriKey), Setting.Ins.EthCliUrl);
+                return web3Ins;
             }
         }
     }

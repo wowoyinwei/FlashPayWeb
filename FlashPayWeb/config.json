@@ -2,7 +2,8 @@
   "port": 83,
   "simpleDbPath": "./simpleDb",
   "ethCliUrl": "http://123.176.98.59:8545",
-  "StartBlockNumber": 5605950
+  "CrawlerUrl": "http://123.176.98.59:82/manage",
+  "OwnerPriKey": "88F537DDC37758C32C793CBCF84D153E29747C1D23AC66783B9937E445118BEE"
 }
 
 

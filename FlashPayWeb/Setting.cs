@@ -19,7 +19,8 @@ namespace FlashPayWeb
         public int Port;
         public string SimpleDbPath;
         public string EthCliUrl;
-        public uint StartBlockNumber;
+        public string CrawlerUrl;
+        public string OwnerPriKey;
 
         public Setting()
         {
@@ -27,7 +28,8 @@ namespace FlashPayWeb
             Port = (int)json["port"];
             SimpleDbPath = (string)json["simpleDbPath"];
             EthCliUrl = (string)json["ethCliUrl"];
-            StartBlockNumber = (uint)json["StartBlockNumber"];
+            CrawlerUrl = (string)json["CrawlerUrl"];
+            OwnerPriKey = (string)json["OwnerPriKey"];
         }
 
     }
