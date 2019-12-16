@@ -25,7 +25,7 @@ namespace FlashPayWeb.Apis
 
             switch (req.method)
             {
-                case "createAddress":
+                case "getEthAddr":
                     {
                         string userName = (string)req.@params[0];
                         string password = (string)req.@params[1];
@@ -35,7 +35,7 @@ namespace FlashPayWeb.Apis
                         User user = Singleton.Store.GetUsers().TryGet(uk);
                         if (user != null)
                         {
-                            result = getJAbyKV("error","exist");
+                            result = getJAbyJ(user.ToJson());
                             break;
                         }
                         //随机产生一个私钥
@@ -60,35 +60,12 @@ namespace FlashPayWeb.Apis
                         }
                         break;
                     }
-                case "getAddress":
+                case "userTransfer":
                     {
-                        string userName = (string)req.@params[0];
-                        string password = (string)req.@params[1];
-                        UserKey uk = new UserKey() { Password = password, Username = userName };
-
-                        //先验证这个账户有没有申请过私钥
-                        User user = Singleton.Store.GetUsers().TryGet(uk);
-                        if (user == null)
-                        {
-                            result = getJAbyKV("error", "not exist");
-                            break;
-                        }
-                        result = getJAbyJ(user.ToJson());
-                        break;
-                    }
-                case "mintUSDF":
-                    {
-                        string userName = (string)req.@params[0];
-                        string password = (string)req.@params[1];
-                        BigInteger amount = BigInteger.Parse((string)req.@params[2]);
-                        UserKey uk = new UserKey() { Password = password, Username = userName };
-                        User user = Singleton.Store.GetUsers().TryGet(uk);
-                        if (user == null)
-                        {
-                            result = getJAbyKV("error", "not exist");
-                            break;
-                        }
-                        var receiverAddress = user.Address.ToString();
+                        var receiverAddress = (string)req.@params[0];
+                        var amount = BigInteger.Parse((string)req.@params[1]);
+                        var tag = (string)req.@params[2];
+                        var signData = (string)req.@params[3];
                         var transferHandler = Singleton.Web3Ins.Eth.GetContractTransactionHandler<TransferFunction>();
                         var transfer = new TransferFunction()
                         {
@@ -97,29 +74,6 @@ namespace FlashPayWeb.Apis
                         };
                         var transactionReceipt = transferHandler.SendRequestAndWaitForReceiptAsync("0x2774c07591067523cc72cee4876620e9d304268c", transfer);
                         result = getJAbyKV("result",true);
-                        break;
-                    }
-                case "burnUSDF":
-                    {
-                        string userName = (string)req.@params[0];
-                        string password = (string)req.@params[1];
-                        BigInteger amount = BigInteger.Parse((string)req.@params[2]);
-                        UserKey uk = new UserKey() { Password = password, Username = userName };
-                        User user = Singleton.Store.GetUsers().TryGet(uk);
-                        if (user == null)
-                        {
-                            result = getJAbyKV("error", "not exist");
-                            break;
-                        }
-                        var receiverAddress = "0x4b8db98D09e35D85E501321b68195F9f23EfDd87";
-                        var transferHandler = new Web3(new Account(user.PrivateKey), Setting.Ins.EthCliUrl).Eth.GetContractTransactionHandler<TransferFunction>();
-                        var transfer = new TransferFunction()
-                        {
-                            To = receiverAddress,
-                            TokenAmount = amount
-                        };
-                        var transactionReceipt = transferHandler.SendRequestAndWaitForReceiptAsync("0x2774c07591067523cc72cee4876620e9d304268c", transfer);
-                        result = getJAbyKV("result", true);
                         break;
                     }
             }
