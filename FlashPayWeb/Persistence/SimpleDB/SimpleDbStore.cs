@@ -32,9 +32,9 @@ namespace FlashPayWeb.Persistence.SimpleDB
             db.Dispose();
         }
 
-        public override Cache<UserKey, User> GetUsers()
+        public override Cache<UInt256, User> GetUsers()
         {
-            return new SimpleDbCache<UserKey, User>(db,null,TableId.DATA_User);
+            return new SimpleDbCache<UInt256, User>(db,null,TableId.DATA_User);
         }
 
         public override Snapshot GetSnapshot()

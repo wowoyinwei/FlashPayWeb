@@ -21,6 +21,7 @@ namespace FlashPayWeb
         public string EthCliUrl;
         public string CrawlerUrl;
         public string OwnerPriKey;
+        public string ABI;
 
         public Setting()
         {
@@ -30,6 +31,7 @@ namespace FlashPayWeb
             EthCliUrl = (string)json["ethCliUrl"];
             CrawlerUrl = (string)json["CrawlerUrl"];
             OwnerPriKey = (string)json["OwnerPriKey"];
+            ABI = json["abi"].ToString();
         }
 
     }

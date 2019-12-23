@@ -19,6 +19,8 @@ namespace FlashPayWeb.Persistence
             var it = snapShot.CreateKeyIterator(tableId,beginKey);
             {
                 it.SeekToFirst();
+
+                var a = it.Current;
                 while (it.MoveNext())
                 {
                     byte[] key = it.Current;

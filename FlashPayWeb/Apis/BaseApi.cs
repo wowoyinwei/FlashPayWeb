@@ -2,6 +2,7 @@
 using FlashPayWeb.RPC;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Threading.Tasks;
 
 namespace FlashPayWeb.Apis
 {
@@ -41,13 +42,13 @@ namespace FlashPayWeb.Apis
                         };
         }
 
-        public object getRes(JsonRPCrequest req, string reqAddr)
+        public async Task<object> getRes(JsonRPCrequest req, string reqAddr)
         {
             JArray result = new JArray();
             try
             {
                 point(req.method);
-                result = ProcessRes(req);
+                result = await ProcessRes(req);
                 if (result != null && result.Count > 0 && result[0]["errorCode"] != null)
                 {
                     JsonPRCresponse_Error resE = new JsonPRCresponse_Error(req.id, (int)result[0]["errorCode"], (string)result[0]["errorMsg"], (string)result[0]["errorData"]);
@@ -77,7 +78,7 @@ namespace FlashPayWeb.Apis
             return res;
         }
 
-        protected virtual JArray ProcessRes(JsonRPCrequest req)
+        protected async virtual Task<JArray> ProcessRes(JsonRPCrequest req)
         {
             JArray result = new JArray();
 

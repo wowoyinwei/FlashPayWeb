@@ -11,14 +11,14 @@ namespace FlashPayWeb.Persistence.SimpleDB
         private readonly IWriteBatch batch;
 
 
-        public override Cache<UserKey, User> Users{ get; }
+        public override Cache<UInt256, User> Users{ get; }
 
         public SimpleDbSnapShot(DB db)
         {
             this.db = db;
             this.snapshot = db.UseSnapShot();
             this.batch = db.CreateWriteBatch();
-            Users = new SimpleDbCache<UserKey, User>(this.db,this.batch,TableId.DATA_User);
+            Users = new SimpleDbCache<UInt256, User>(this.db,this.batch,TableId.DATA_User);
         }
 
         public override void Commit()

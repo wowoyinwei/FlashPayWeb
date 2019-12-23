@@ -24,7 +24,7 @@ namespace FlashPayWeb.Controllers
         protected virtual BaseApi api { get { return new BaseApi("Base"); } }
 
         [HttpGet]
-        public JsonResult Get(string @jsonrpc, string @method, string @params, long @id)
+        public async Task<JsonResult> Get(string @jsonrpc, string @method, string @params, long @id)
         {
             JsonRPCrequest req = null;
             DateTime start = DateTime.Now;
@@ -41,7 +41,7 @@ namespace FlashPayWeb.Controllers
 
                 string ipAddr = Request.HttpContext.Connection.RemoteIpAddress.ToString();
 
-                var result = Json(api.getRes(req, ipAddr));
+                var result = Json(await api.getRes(req, ipAddr));
                 if (DateTime.Now.Subtract(start).TotalSeconds > logExeTimeMax)
                 {
                     log.Info(LogHelper.logInfoFormat(req, result, start));
@@ -94,7 +94,7 @@ namespace FlashPayWeb.Controllers
 
                 string ipAddr = Request.HttpContext.Connection.RemoteIpAddress.ToString();
 
-                var result = Json(api.getRes(req, ipAddr));
+                var result = Json(await api.getRes(req, ipAddr));
                 if (DateTime.Now.Subtract(start).TotalSeconds > logExeTimeMax)
                 {
                     log.Info(LogHelper.logInfoFormat(req, result, start));
