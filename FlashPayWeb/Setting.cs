@@ -31,7 +31,7 @@ namespace FlashPayWeb
             SimpleDbPath = (string)json["simpleDbPath"];
             EthCliUrl = (string)json["ethCliUrl"];
             CrawlerUrl = (string)json["CrawlerUrl"];
-            OwnerPriKey = (string)json["OwnerPriKey"] == "" ? (string)json["OwnerPriKey"] : throw new System.FormatException();
+            OwnerPriKey = (string)json["OwnerPriKey"] == "" ? throw new System.FormatException():(string)json["OwnerPriKey"];
             USDT = (string)json["USDT"];
             ABI = json["abi"].ToString();
         }
