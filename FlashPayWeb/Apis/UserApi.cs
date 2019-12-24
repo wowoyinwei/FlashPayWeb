@@ -89,7 +89,18 @@ namespace FlashPayWeb.Apis
                 case "getAllAddrs":
                     {
                         JArray ja = new JArray();
-                        ja.Add(Singleton.Store.GetUsers().Find().Select(p=>p.Value.ToJson_OnlyAddr()));
+                        List<string> addrs = new List<string>();
+                        addrs.AddRange(Singleton.Store.GetUsers().Find().Select((p)=> {
+                            return p.Value.Address.ToString();
+                        }));
+                        for(var i = 0;i<addrs.Count;i++)
+                        {
+                            var addr = addrs[i];
+                            var contract = Singleton.Web3Ins.Eth.GetContract(Setting.Ins.ABI, Setting.Ins.USDT);
+                            var f = contract.GetFunction("balanceOf");
+                            var amount = await f.CallAsync<BigInteger>(addr);
+                            ja.Add(new JObject() { { addr.ToString(), amount.ToString() } });
+                        }
                         result = ja;
                         break;
                     }
