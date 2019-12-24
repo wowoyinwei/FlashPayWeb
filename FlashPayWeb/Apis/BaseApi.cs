@@ -55,12 +55,12 @@ namespace FlashPayWeb.Apis
 
                     return resE;
                 }
-                if (result.Count == 0)
-                {
-                    JsonPRCresponse_Error resE = new JsonPRCresponse_Error(req.id, -1, "No Data", "Data does not exist");
-
-                    return resE;
-                }
+                //if (result.Count == 0)
+                //{
+                //    JsonPRCresponse_Error resE = new JsonPRCresponse_Error(req.id, -1, "No Data", "Data does not exist");
+                //
+                //    return resE;
+                //}
             }
             catch (Exception e)
             {
