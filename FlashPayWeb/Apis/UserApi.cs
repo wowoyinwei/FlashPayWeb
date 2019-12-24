@@ -104,7 +104,7 @@ namespace FlashPayWeb.Apis
                             var account = new Account(privateKey);
                             var web3 = new Web3(account, Setting.Ins.EthCliUrl);
 
-                            var contract = web3.Eth.GetContract(Setting.Ins.ABI, "0x2774c07591067523cc72cee4876620e9d304268c");
+                            var contract = web3.Eth.GetContract(Setting.Ins.ABI, Setting.Ins.USDT);
                             var f = contract.GetFunction("balanceOf");
                             var amount = await f.CallAsync<BigInteger>(account.Address);
                             if (amount == 0)
@@ -112,10 +112,10 @@ namespace FlashPayWeb.Apis
                             var transferHandler = web3.Eth.GetContractTransactionHandler<TransferFunction>();
                             var transfer = new TransferFunction()
                             {
-                                To = "0x4b8db98D09e35D85E501321b68195F9f23EfDd87",
+                                To = new Account(Setting.Ins.OwnerPriKey).Address,
                                 TokenAmount = amount
                             };
-                            var transactionHash = await transferHandler.SendRequestAsync("0x2774c07591067523cc72cee4876620e9d304268c", transfer);
+                            var transactionHash = await transferHandler.SendRequestAsync(Setting.Ins.USDT, transfer);
                             ja.Add(new JObject() { { account.Address,transactionHash} });
                         }
                         result = ja;

@@ -4,6 +4,7 @@
   "ethCliUrl": "http://123.176.98.59:8545",
   "CrawlerUrl": "http://123.176.98.59:82/manage",
   "OwnerPriKey": "",
+  "USDT": "0x2774c07591067523cc72cee4876620e9d304268c",
   "abi": [
     {
       "constant": true,
